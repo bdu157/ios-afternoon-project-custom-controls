@@ -11,17 +11,21 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBAction func updateRating(_ ratingControl: CustomControl) {
+        
+        //ratingControl.setup()
+        
         if ratingControl.value == 1 {
-            self.navigationItem.title = "User Rating: \(ratingControl.value) star"
+            self.title = "User Rating: \(ratingControl.value) star"
         } else {
-            self.navigationItem.title = "User Rating: \(ratingControl.value) stars"
+            self.title = "User Rating: \(ratingControl.value) stars"
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        //updateRating(<#T##ratingControl: CustomControl##CustomControl#>)
     }
-
-
+    
 }
 
