@@ -18,12 +18,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view verifyAmbiguity="ignoreSizes" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gj-9k-dRp" customClass="CustomControl" customModule="StarRating" customModuleProvider="target">
+                            <view verifyAmbiguity="ignoreSizes" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gj-9k-dRp" customClass="CustomControl" customModule="StarRating" customModuleProvider="target">
                                 <rect key="frame" x="40" y="258.66666666666669" width="295" height="295.00000000000006"/>
-                                <color key="backgroundColor" red="0.90054720639999997" green="1" blue="0.9692386985" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="5gj-9k-dRp" secondAttribute="height" multiplier="1:1" id="Zr4-U1-HTn"/>
-                                </constraints>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="updateRating:" destination="Ufz-5b-pRg" eventType="valueChanged" id="yU9-3c-qgX"/>
                                 </connections>
@@ -31,9 +28,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="pOi-x8-fwb" firstAttribute="trailing" secondItem="5gj-9k-dRp" secondAttribute="trailing" constant="40" id="TXd-Cw-Gg8"/>
-                            <constraint firstItem="5gj-9k-dRp" firstAttribute="leading" secondItem="pOi-x8-fwb" secondAttribute="leading" constant="40" id="ZQ3-Rf-wrR"/>
-                            <constraint firstItem="5gj-9k-dRp" firstAttribute="centerY" secondItem="1FL-4F-gFc" secondAttribute="centerY" id="ndc-Kz-jf4"/>
+                            <constraint firstItem="5gj-9k-dRp" firstAttribute="centerX" secondItem="1FL-4F-gFc" secondAttribute="centerX" id="oX7-KJ-d3u"/>
+                            <constraint firstItem="5gj-9k-dRp" firstAttribute="centerY" secondItem="1FL-4F-gFc" secondAttribute="centerY" id="ueQ-K5-S8B"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pOi-x8-fwb"/>
                     </view>

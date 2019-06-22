@@ -31,15 +31,11 @@ class CustomControl: UIControl {
         setup()
     }
     
-    /*
+/*
     override func layoutSubviews() {
-        layer.cornerRadius = frame.width / 2.0
-        layer.borderWidth = 1.0
-        layer.borderColor = UIColor.orange.cgColor
+        
     }
- */
-    
-
+*/
     
     func setup() {
         
@@ -49,20 +45,20 @@ class CustomControl: UIControl {
         //layout label
         
         //setup label - properties of the label -> size, font
-        frame = CGRect(origin: .zero, size: intrinsicContentSize)
-    
+        //frame = CGRect(origin: .zero, size: intrinsicContentSize)
         print(frame)
         
         for num in 1...componentCount  {
             //create label
             let label = UILabel()
             //layout label
+            addSubview(label)
             var number: Int = num * 8
             if number != 8 {
                 number = (num * 8) + Int(componentDimension) * (num - 1)
             }
         
-            label.frame = CGRect(origin: CGPoint(x: number, y: 100), size: CGSize(width: componentDimension, height: componentDimension))
+            label.frame = CGRect(origin: CGPoint(x: number, y: 0), size: CGSize(width: componentDimension, height: componentDimension))
             print(label.frame)
             
             //setup label
@@ -77,9 +73,7 @@ class CustomControl: UIControl {
             if let firstLabel = label.viewWithTag(0) as? UILabel {
                 firstLabel.textColor = componentActiveColor
             }
-            addSubview(label)
             labels.append(label)
-            
         }
     }
     
@@ -87,21 +81,21 @@ class CustomControl: UIControl {
     override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         print("begining tracking")
         self.updateValue(at: touch)
-        sendActions(for: [.touchDown, .valueChanged])
+        //sendActions(for: [.touchDown, .valueChanged])
         return true
     }
     
     override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         print("continue tracking")
-        let touchPoint = touch.location(in: self)
-        if bounds.contains(touchPoint) {
+      //  let touchPoint = touch.location(in: self)
+      //  if bounds.contains(touchPoint) {
             self.updateValue(at: touch)
             sendActions(for: [.touchDragInside, .valueChanged])
             print("touch drag inside")
-        } else {
-            sendActions(for: [.touchDragOutside])
-            print("touch drag ouside")
-        }
+      //  } else {
+//            sendActions(for: [.touchDragOutside])
+//            print("touch drag ouside")
+      //  }
         return true
     }
     
@@ -151,5 +145,15 @@ class CustomControl: UIControl {
     }
 }
 
-
+extension UIView {
+    // "Flare view" animation sequence
+    func performFlare() {
+        func flare()   { transform = CGAffineTransform(scaleX: 1.6, y: 1.6) }
+        func unflare() { transform = .identity }
+        
+        UIView.animate(withDuration: 0.3,
+                       animations: { flare() },
+                       completion: { _ in UIView.animate(withDuration: 0.1) { unflare() }})
+    }
+}
 //CGPoint, CGRect, CGSize, frame, bounds

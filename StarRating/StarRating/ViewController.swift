@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBAction func updateRating(_ ratingControl: CustomControl) {
+
         
         //ratingControl.setup()
         let ratingNum = ratingControl.value + 1
