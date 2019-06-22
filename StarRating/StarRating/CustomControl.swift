@@ -33,9 +33,8 @@ class CustomControl: UIControl {
     
     /*
     override func layoutSubviews() {
-        clipsToBounds = true
         layer.cornerRadius = frame.width / 2.0
-        layer.borderWidth = 5.0
+        layer.borderWidth = 1.0
         layer.borderColor = UIColor.orange.cgColor
     }
  */
@@ -51,6 +50,7 @@ class CustomControl: UIControl {
         
         //setup label - properties of the label -> size, font
         frame = CGRect(origin: .zero, size: intrinsicContentSize)
+    
         print(frame)
         
         for num in 1...componentCount  {
@@ -64,16 +64,17 @@ class CustomControl: UIControl {
         
             label.frame = CGRect(origin: CGPoint(x: number, y: 100), size: CGSize(width: componentDimension, height: componentDimension))
             print(label.frame)
+            
             //setup label
             
             //label.backgroundColor = .blue
-            label.tag = num
+            label.tag = num-1
             print(label.tag)
             label.text = "✭"
             label.font = UIFont.systemFont(ofSize: 32)
             label.textAlignment = .center
             label.textColor = componentInactiveColor
-            if let firstLabel = label.viewWithTag(1) as? UILabel {
+            if let firstLabel = label.viewWithTag(0) as? UILabel {
                 firstLabel.textColor = componentActiveColor
             }
             addSubview(label)
@@ -131,20 +132,22 @@ class CustomControl: UIControl {
         let touchPoint = touch.location(in: self)
         print(touchPoint)
         //something.contains(touchPoint)  to see if touchPoint is contained in
-        for label in labels {
-            if label.frame.contains(touchPoint) {
-                value = label.tag
-                
+        for x in labels {
+            if x.frame.contains(touchPoint) {
+                value = x.tag
+                print(value)
+                for num in value...4 {
+                    labels[num].textColor = componentInactiveColor
+                }
+                setupStarColorToActive()
                 }
             }
         }
     
-    func setupStarColor(for label: UILabel) {  //this changes the color of label inside of lables array because of the tag being recognized for change?
-        for num in 0...label.tag - 1 {
-            if let labelWithTag = labels[num].viewWithTag(num+1) as? UILabel {
-                labelWithTag.textColor = componentActiveColor
+    func setupStarColorToActive() {
+        for num in 0...value {
+                labels[num].textColor = componentActiveColor
             }
-        }
     }
 }
 
