@@ -85,7 +85,7 @@ class CustomControl: UIControl {
     //Touch Handlers
     override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         print("begining tracking")
-        self.value = self.updateValue(at: touch)
+        self.updateValue(at: touch)
         sendActions(for: [.touchDown, .valueChanged])
         return true
     }
@@ -94,7 +94,7 @@ class CustomControl: UIControl {
         print("continue tracking")
         let touchPoint = touch.location(in: self)
         if bounds.contains(touchPoint) {
-            self.value = self.updateValue(at: touch)
+            self.updateValue(at: touch)
             sendActions(for: [.touchDragInside, .valueChanged])
             print("touch drag inside")
         } else {
@@ -114,7 +114,7 @@ class CustomControl: UIControl {
         
         let touchPoint = touch.location(in: self)
         if bounds.contains(touchPoint) {
-            self.value = self.updateValue(at: touch)
+            self.updateValue(at: touch)
             sendActions(for: [.touchUpInside, .valueChanged])
         } else {
             sendActions(for: .touchUpOutside)
@@ -127,17 +127,20 @@ class CustomControl: UIControl {
         sendActions(for: [.touchCancel])
     }
     
-    private func updateValue(at touch: UITouch) -> Int {
+    private func updateValue(at touch: UITouch) {
         let touchPoint = touch.location(in: self)
         print(touchPoint)
-        if bounds.intersects(frame) {
-            return 3
+        //something.contains(touchPoint)  to see if touchPoint is contained in
+        for label in labels {
+            if label.frame.contains(touchPoint) {
+                value = label.tag
+                
+                }
+            }
         }
-        return 3
-    }
     
-    func color() {  //this changes the color of label inside of lables array because of the tag being recognized for change?
-        for num in 0...value-1 {
+    func setupStarColor(for label: UILabel) {  //this changes the color of label inside of lables array because of the tag being recognized for change?
+        for num in 0...label.tag - 1 {
             if let labelWithTag = labels[num].viewWithTag(num+1) as? UILabel {
                 labelWithTag.textColor = componentActiveColor
             }
