@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class CustomControl: UIControl {
-    var value : Int = 4
+    var value : Int = 1
     var labels: [UILabel] = []
     
     override var intrinsicContentSize: CGSize {
@@ -72,24 +72,77 @@ class CustomControl: UIControl {
             label.text = "✭"
             label.font = UIFont.systemFont(ofSize: 32)
             label.textAlignment = .center
-            color(for: label)
+            label.textColor = componentInactiveColor
+            if let firstLabel = label.viewWithTag(1) as? UILabel {
+                firstLabel.textColor = componentActiveColor
+            }
             addSubview(label)
             labels.append(label)
             
         }
     }
-    private func color(for label: UILabel) {
-        label.textColor = componentInactiveColor
-        for num in 1...value {
-            if let labelWithTag = label.viewWithTag(num) as? UILabel {
+    
+    //Touch Handlers
+    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        print("begining tracking")
+        self.value = self.updateValue(at: touch)
+        sendActions(for: [.touchDown, .valueChanged])
+        return true
+    }
+    
+    override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        print("continue tracking")
+        let touchPoint = touch.location(in: self)
+        if bounds.contains(touchPoint) {
+            self.value = self.updateValue(at: touch)
+            sendActions(for: [.touchDragInside, .valueChanged])
+            print("touch drag inside")
+        } else {
+            sendActions(for: [.touchDragOutside])
+            print("touch drag ouside")
+        }
+        return true
+    }
+    
+    override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+        defer {
+            super.endTracking(touch, with: event)
+        }
+        print("end tracking")
+    
+        guard let touch = touch else {return}
+        
+        let touchPoint = touch.location(in: self)
+        if bounds.contains(touchPoint) {
+            self.value = self.updateValue(at: touch)
+            sendActions(for: [.touchUpInside, .valueChanged])
+        } else {
+            sendActions(for: .touchUpOutside)
+            print("touch up outside")
+        }
+    }
+    
+    override func cancelTracking(with event: UIEvent?) {
+        print("cancel tracking")
+        sendActions(for: [.touchCancel])
+    }
+    
+    private func updateValue(at touch: UITouch) -> Int {
+        let touchPoint = touch.location(in: self)
+        print(touchPoint)
+        if bounds.intersects(frame) {
+            return 3
+        }
+        return 3
+    }
+    
+    func color() {  //this changes the color of label inside of lables array because of the tag being recognized for change?
+        for num in 0...value-1 {
+            if let labelWithTag = labels[num].viewWithTag(num+1) as? UILabel {
                 labelWithTag.textColor = componentActiveColor
             }
         }
     }
-    
-    
-    //touch
-    
 }
 
 
